@@ -10,6 +10,18 @@ pluginManagement {
 
 plugins {
   id("com.squareup.wire.settings")
+  id("com.gradle.develocity") version "4.3.1" 
+}
+
+develocity {
+    server = "https://ge.solutions-team.gradle.com"
+    buildScan {
+        uploadInBackground = !isCI
+        publishing.onlyIf { it.isAuthenticated }
+        obfuscation {
+            ipAddresses { addresses -> addresses.map { "0.0.0.0" } }
+        }
+    }
 }
 
 dependencyResolutionManagement {
