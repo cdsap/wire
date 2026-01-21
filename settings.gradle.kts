@@ -16,7 +16,7 @@ plugins {
 develocity {
     server = "https://ge.solutions-team.gradle.com"
     buildScan {
-        uploadInBackground = !isCI
+        uploadInBackground = false
         publishing.onlyIf { it.isAuthenticated }
         obfuscation {
             ipAddresses { addresses -> addresses.map { "0.0.0.0" } }
