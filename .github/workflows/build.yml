@@ -34,6 +34,12 @@ jobs:
           ./gradlew generateTests -Pswift=false --stacktrace --warning-mode all
           if [ ! -z "$(git status --porcelain)" ]; then git diff; echo -e "\nTest files changed. Did you run ./gradlew generateTests?"; exit 1; fi
 
+      - name: Processs Watcher 
+        uses: cdsap/build-process-watcher@main
+        with:
+            remote_monitoring: true
+            collect_gc: true      
+      
       - name: Test Native, JS and Wasm
         run: |
           ./gradlew -Dkjs=true -Dknative=true -Dkwasm=true -Pswift=false samples:native:build samples:js:build samples:multi-target:build --stacktrace --warning-mode all
@@ -72,7 +78,12 @@ jobs:
 
       - name: Install Chrome
         uses: browser-actions/setup-chrome@latest
-
+      
+      - name: Processs Watcher 
+        uses: cdsap/build-process-watcher@main
+        with:
+            remote_monitoring: true
+            collect_gc: true      
       - name: Test
         run: |
           ./gradlew -Pswift=false build --stacktrace --warning-mode all
